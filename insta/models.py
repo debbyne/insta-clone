@@ -10,3 +10,21 @@ class Images(models.Model):
     # image = CloudinaryField('image')
     # location = models.ForeignKey(Location,on_delete=models.RESTRICT,)
     # category = models.ForeignKey(Category, on_delete=models.RESTRICT,)
+
+    
+    def save_image(self):
+        self.save()
+
+    def __str__(self):
+        return self.name
+
+    
+    def delete_image(self):
+        self.delete()
+    @classmethod
+    def update_image(cls ,id ,image):
+        return cls.objects.filter(id = id).update(image = image)
+    @classmethod
+    def get_images(cls):
+        images = cls.objects.all()
+        return images
