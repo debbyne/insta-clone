@@ -1,17 +1,17 @@
 from django.test import TestCase
-from .models import Images
+from .models import Post
 
 # Create your tests here.
-class ImageTestClass(TestCase):
+class PostTestClass(TestCase):
     def setUp(self):
        pass
     def test_instance(self):
-        self.assertTrue(isinstance(self.test_image,Images))
+        self.assertTrue(isinstance(self.test_image,Post))
      
     def test_save_image(self):
         self.image.save_image()
-        self.assertTrue(len(Images.objects.all()) == 1)
+        self.assertTrue(len(Post.objects.all()) == 1)
     def test_delete_image(self):
         self.test_image.delete_image()
-        image = Images.objects.all()
-        self.assertTrue(len(Images.objects.all()) ==1)
+        image = Post.objects.all()
+        self.assertTrue(len(Post.objects.all()) ==1)
