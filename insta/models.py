@@ -3,6 +3,9 @@ from email.mime import image
 from unicodedata import category, name
 from django.db import models
 # Create your models here.
+
+class Profile(models.Model):
+    pass
 class Images(models.Model):
     image = models.ImageField(upload_to = 'photos/',default="",null=True)
     name = models.CharField(max_length=50,null=True)
