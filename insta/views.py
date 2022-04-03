@@ -135,3 +135,28 @@ def likePost(request):
     if request.is_ajax():
         html = render_to_string('postlikes.html', Parameters, request=request)
         return JsonResponse({'form': html})
+
+@login_required(login_url='login')
+def postComments(request, id):
+    image = get_object_or_404(Post, pk=id)
+    is_liked = False
+    if image.likes.filter(id=request.user.id).exists():
+        is_liked = True
+    if request.method == 'POST':
+        form = CommentsForm(request.POST)
+        if form.is_valid():
+            savecomment = form.save(commit=False)
+            savecomment.post = image
+            savecomment.user = request.user.profile
+            savecomment.save()
+            return HttpResponseRedirect(request.path_info)
+    else:
+        form = CommentsForm()
+    Parameters = {
+        'image': image,
+        'form': form,
+        'is_liked': is_liked,
+        'total_likes': image.total_likes()
+    }
+    return render(request, 'photos.html', Parameters)
+
