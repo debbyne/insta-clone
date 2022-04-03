@@ -14,7 +14,8 @@ class Profile(models.Model):
      profile_photo=models.ImageField(upload_to = 'photos/',default="",null=True)
      user=models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
      location = models.CharField(max_length=50, blank=True)
-
+     followers = models.ManyToManyField('Profile', related_name = 'followers_profile', blank =True)
+     following = models.ManyToManyField('Profile', related_name='following_profile', blank =True)
 
 
      def __str__(self):
@@ -34,6 +35,21 @@ class Profile(models.Model):
 
      def delete_profile(self):
         self.delete()
+
+     def get_number_of_followers(self):
+        if self.followers.count():
+         return self.followers.count()
+        else:
+         return 0
+
+     def get_number_of_following(self):
+        if self.following.count():
+         return self.following.count()
+        else:
+         return 0
+     def __str__(self):
+        return self.user.username
+
 
      @classmethod
      def search_profile(cls, name):
@@ -95,4 +111,6 @@ class Follow(models.Model):
     follower = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='following')
 
     def __str__(self):
-        return f'{self.follower} Follow'  
+        return f'{self.follower} Follow' 
+
+ 

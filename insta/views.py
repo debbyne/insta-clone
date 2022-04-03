@@ -1,15 +1,13 @@
 from django.shortcuts import render,redirect, get_object_or_404
-from django.http  import HttpResponse
+from django.http  import HttpResponse,HttpResponseRedirect
 from .models import Post,Profile,Comments,Follow
 from django.contrib.auth.decorators import login_required
 from .forms import SignUpForm, UpdateUserForm, UpdateUserProfileForm, PostForm, CommentsForm
 from django.contrib.auth import login, authenticate
+from django.contrib.auth.models import User
 
 
 # Create your views here.
-def index(request):
-    post = Post.objects.all()
-    return render(request, 'index.html')
 
 @login_required(login_url='/accounts/login')
 def search_results(request):
@@ -39,3 +37,17 @@ def SignUp(request):
         form = SignUpForm()
     return render(request, 'django_registration/signup.html', {'form': form})
 
+@login_required(login_url='/accounts/login')
+def index(request):
+    images = Post.objects.all()
+    user = User.objects.exclude(id=request.user.id)
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.user = request.user.profile
+            post.save()
+            return HttpResponseRedirect(request.path_info)
+    else:
+        form = PostForm()
+    return render(request, 'index.html', {'images': images,'form': form,'user': user,})
