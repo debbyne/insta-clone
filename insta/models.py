@@ -66,7 +66,7 @@ class Post(models.Model):
     # image = CloudinaryField('image')
     likes = models.ManyToManyField(User, related_name='likes', blank=True, )
     user = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='posts', null=True)
-    time_created=models.DateTimeField(auto_now_add=True, null=True)
+    time_posted=models.DateTimeField(auto_now_add=True, null=True)
 
     class Meta:
         ordering = ["-pk"]
@@ -98,7 +98,7 @@ class Comments(models.Model):
     comment = models.TextField()
     user = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='comments')
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
-    time_created = models.DateTimeField(auto_now_add=True, null=True)
+    time_posted = models.DateTimeField(auto_now_add=True, null=True)
 
     class Meta:
         ordering = ["-pk"]
