@@ -1,3 +1,5 @@
+{% extends 'base.html' %}
+{% block content %}
 <!--The search form above-->
 <div class="col-sm-6 col-md-6">
     {% if user.is_authenticated %}
@@ -26,3 +28,4 @@
 
     {% endif %}
   </div>
+  {% endblock %}
