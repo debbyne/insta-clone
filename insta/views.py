@@ -1,11 +1,12 @@
 from inspect import Parameter
 from django.shortcuts import render,redirect, get_object_or_404
-from django.http  import HttpResponse,HttpResponseRedirect
+from django.http  import HttpResponse,HttpResponseRedirect, JsonResponse
 from .models import Post,Profile,Comments,Follow
 from django.contrib.auth.decorators import login_required
 from .forms import SignUpForm, UpdateUserForm, UpdateUserProfileForm, PostForm, CommentsForm
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.models import User
+from django.template.loader import render_to_string
 
 
 # Create your views here.
@@ -114,3 +115,23 @@ def unfollow(request, unfollow):
         unfollow_d = Follow.objects.filter(follower=request.user.profile, followed=userProfile)
         unfollow_d.delete()
         return redirect('userProfile', userProfile.user.username)
+
+
+def likePost(request):
+    image = get_object_or_404(Post, id=request.POST.get('id'))
+    is_liked = False
+    if image.likes.filter(id=request.user.id).exists():
+        image.likes.remove(request.user)
+        is_liked = False
+    else:
+        image.likes.add(request.user)
+        is_liked = False
+
+        Parameters = {
+        'image': image,
+        'is_liked': is_liked,
+        'total_likes': image.total_likes()
+    }
+    if request.is_ajax():
+        html = render_to_string('postlikes.html', Parameters, request=request)
+        return JsonResponse({'form': html})
