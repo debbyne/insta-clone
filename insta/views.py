@@ -99,4 +99,18 @@ def userProfile(request, username):
         'following': following,
         'follow_status': follow_status,
     }
-    return render(request, 'profile/user_profile.html', Parameters)
+    return render(request, 'userprofile.html', Parameters)
+
+def follow(request, follow):
+       if request.method == 'GET':
+        userProfile = Profile.objects.get(pk=follow)
+        follow_s = Follow(follower=request.user.profile, followed=userProfile)
+        follow_s.save()
+        return redirect('userProfile', userProfile.user.username)
+
+def unfollow(request, unfollow):
+      if request.method == 'GET':
+        userProfile = Profile.objects.get(pk=unfollow)
+        unfollow_d = Follow.objects.filter(follower=request.user.profile, followed=userProfile)
+        unfollow_d.delete()
+        return redirect('userProfile', userProfile.user.username)
