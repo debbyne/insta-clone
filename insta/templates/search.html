@@ -4,24 +4,19 @@
 
   <div class="row">
     {% if images %}
-      <h2>Found {{ images|number }} of searched term {{message}}</h2>
+      <h2>Found {{ profiles|number }} of searched term {{message}}</h2>
     {% else %}
-      <h2> Found 0 images for the search term {{message}}</h2>
+      <h2> Found 0 profiles for the search term {{message}}</h2>
     {% endif %}
 
   </div>
 
   <div class="row">
 
-  {% if images%}
-    {% for image in images %}
-     <h3>Photo Details</h3>
-     <ul>
-         <li>image-name {{image.name}} </li>
-         <li>image-url {{image.url}}</li>
-         <li>image-description {{image.description}} </li>
-         <li>image-location {{image.location}}</li>
-     </ul>
+  {% if profiles %}
+    {% for user_profile in profiles %}
+    
+    
     {% endfor %}
   {% endif %}
   </div>
