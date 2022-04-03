@@ -36,9 +36,14 @@ def SignUp(request):
     else:
         form = SignUpForm()
     return render(request, 'django_registration/signup.html', {'form': form})
-
 @login_required(login_url='/accounts/login')
 def index(request):
+    users_followed = request.user.profile.following.all()
+    posts = Post.objects.filter(profile__in=users_followed).order_by('-posted_on')
+
+
+@login_required(login_url='/accounts/login')
+def posts(request):
     images = Post.objects.all()
     user = User.objects.exclude(id=request.user.id)
     if request.method == 'POST':
