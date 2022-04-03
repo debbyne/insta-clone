@@ -5,6 +5,7 @@ from unicodedata import name
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from cloudinary.models import CloudinaryField
 
 # Create your models here.
 
@@ -14,8 +15,8 @@ class Profile(models.Model):
      profile_photo=models.ImageField(upload_to = 'photos/',default="",null=True)
      user=models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
      location = models.CharField(max_length=50, blank=True)
-     followers = models.ManyToManyField('Profile', related_name = 'followers_profile', blank =True)
-     following = models.ManyToManyField('Profile', related_name='following_profile', blank =True)
+     followers_ig = models.ManyToManyField('Profile', related_name = 'followers_profile', blank =True)
+     following_ig = models.ManyToManyField('Profile', related_name='following_profile', blank =True)
 
 
      def __str__(self):
@@ -60,13 +61,14 @@ class Profile(models.Model):
 
 
 class Post(models.Model):
-    image = models.ImageField(upload_to = 'photos/',default="",null=True)
+    # image = models.ImageField(upload_to = 'photos/',default="",null=True)
     name = models.CharField(max_length=50,null=True)
     caption = models.CharField(max_length=100,null=True)
-    # image = CloudinaryField('image')
+    image = CloudinaryField('image')
     likes = models.ManyToManyField(User, related_name='likes', blank=True, )
     user = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='posts', null=True)
     time_posted=models.DateTimeField(auto_now_add=True, null=True)
+    profile = models.ForeignKey(Profile, null = True,on_delete=models.CASCADE, blank = True)
 
     class Meta:
         ordering = ["-pk"]
@@ -107,8 +109,8 @@ class Comments(models.Model):
         return f'{self.user.name} Post'
 
 class Follow(models.Model):
-    followed = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='followers')
-    follower = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='following')
+    total_followed = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='followers')
+    total_followers = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='following')
 
     def __str__(self):
         return f'{self.follower} Follow' 

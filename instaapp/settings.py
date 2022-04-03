@@ -13,6 +13,9 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 from pathlib import Path
 from decouple import config
 import os
+import cloudinary.api
+import cloudinary
+import cloudinary.uploader
 
 # Email configurations remember to install python-decouple
 EMAIL_USE_TLS = config('EMAIL_USE_TLS')
@@ -46,7 +49,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'insta',
-    'bootstrap3'
+    'bootstrap3',
+    'cloudinary',
 ]
 
 MIDDLEWARE = [
@@ -139,3 +143,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+cloudinary.config( 
+  cloud_name = "dtbixh0z3", 
+  api_key = "832652891133987", 
+  api_secret = "CVnT9TNu9tfvSEUnXcN_1fIm4Eo" 
+
+)

@@ -38,11 +38,13 @@ def SignUp(request):
     else:
         form = SignUpForm()
     return render(request, 'django_registration/signup.html', {'form': form})
+
 @login_required(login_url='/accounts/login')
 def index(request):
-    users_followed = request.user.profile.following.all()
-    posts = Post.objects.filter(profile__in=users_followed).order_by('-posted_on')
-
+    users_total_followed = request.user.profile.following.all()
+    posts = Post.objects.filter(profile__in=users_total_followed).order_by('-time_posted')
+    
+    return render(request,'index.html',{"posts":posts})
 
 @login_required(login_url='/accounts/login')
 def posts(request):
@@ -90,14 +92,14 @@ def userProfile(request, username):
         return redirect('profile', username=request.user.username)
     user_posts = userProfile.profile.posts.all()
     users = User.objects.get(username=username)
-    followers = len(Follow.objects.followers(users))
-    following = len(Follow.objects.following(users))
+    total_followers = len(Follow.objects.total_followers(users))
+    total_following = len(Follow.objects.total_following(users))
     follow_status = None
     Parameters = {
         'userProfile': userProfile,
         'user_posts': user_posts,
-        'followers': followers,
-        'following': following,
+        'followers': total_followers,
+        'following': total_following,
         'follow_status': follow_status,
     }
     return render(request, 'userprofile.html', Parameters)
