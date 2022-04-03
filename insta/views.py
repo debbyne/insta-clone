@@ -79,4 +79,24 @@ def profile(request, username):
         'images': images,   
 
     }
-    return render(request, 'profile/profile.html', params)
+    return render(request, 'profile/profile.html', Parameters)
+
+@login_required(login_url='login')
+def userProfile(request, username):
+    userProfile = get_object_or_404(User, username=username)
+
+    if request.user == userProfile:
+        return redirect('profile', username=request.user.username)
+    user_posts = userProfile.profile.posts.all()
+    users = User.objects.get(username=username)
+    followers = len(Follow.objects.followers(users))
+    following = len(Follow.objects.following(users))
+    follow_status = None
+    Parameters = {
+        'userProfile': userProfile,
+        'user_posts': user_posts,
+        'followers': followers,
+        'following': following,
+        'follow_status': follow_status,
+    }
+    return render(request, 'profile/user_profile.html', Parameters)
