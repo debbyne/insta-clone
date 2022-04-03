@@ -1,3 +1,4 @@
+from inspect import Parameter
 from django.shortcuts import render,redirect, get_object_or_404
 from django.http  import HttpResponse,HttpResponseRedirect
 from .models import Post,Profile,Comments,Follow
@@ -55,4 +56,27 @@ def posts(request):
             return HttpResponseRedirect(request.path_info)
     else:
         form = PostForm()
-    return render(request, 'index.html', {'images': images,'form': form,'user': user,})
+    return render(request, 'photos.html', {'images': images,'form': form,'user': user,})
+
+@login_required(login_url='login')
+def profile(request, username):
+    images = request.user.profile.posts.all()
+    if request.method == 'POST':
+        userForm = UpdateUserForm(request.POST, instance=request.user)
+        profileForm = UpdateUserProfileForm(request.POST, request.FILES, instance=request.user.profile)
+        if userForm.is_valid() and profileForm.is_valid():
+            userForm.save()
+            profileForm.save()
+            return HttpResponseRedirect(request.path_info)
+
+        else:
+            userForm = UpdateUserForm(instance=request.user)
+            profileForm = UpdateUserProfileForm(instance=request.user.profile)
+
+        Parameters = {
+        'userForm': userForm,
+        'profileForm': profileForm,
+        'images': images,   
+
+    }
+    return render(request, 'profile/profile.html', params)
