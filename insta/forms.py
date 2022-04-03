@@ -1,4 +1,4 @@
-from ..models import Post,Comments,Profile
+from .models import Post,Comments,Profile
 from django.forms import ModelForm
 from django import forms
 from django.contrib.auth.models import User
@@ -54,7 +54,7 @@ class PostForm(forms.ModelForm):
         ]
 
 class CommentsForm(forms.ModelForm):
-    
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['comment'].widget = forms.TextInput()
