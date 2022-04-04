@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="col-md-4">  </div>
+    <div class="col-md-4">
+<div class="user-circle">
+    <img src="" alt="image">
+</div>
+    </div>
+    <div class="col-md-4">  </div>
+
+
+    <div class="media">
+        <img class="align-self-start mr-3" src="{{ user.profile.profile_photo.url }}" alt="image" width="45%">
+        <div class="media-body">
+          <h4 class="mt-0">{{user.name}}</h4>
+          <div class="details">
+            <span class="mr-5">{{images.count}}</strong> Posts</span>
+            <span class="mr-5"> {{ user.profile.followers.count }}followers</span>
+            <span class="mr-5"> {{ user.profile.following.count }} following</span>
+          </div>
+          <div class="bio-details">
+              <p>{{ {{ user.profile.bio }} }}</p>
+          </div>
+
+          <div class="prof">
+              <ul>
+                  <li> Change Password </li>
+                  <li>   <a href="/accounts/logout">Logout</a> </li>
+                  <li>Close</li>
+              </ul>
+          </div>
+
+          <div class="card-columns">
+            {% for post in Posts %}
+                <div class="card " id="post">
+                    <div class="card-body">
+                        <img src="{{image.image.url}}" alt="{{image.caption}}" class="card-img"  height="100%">
+                        <p class="text-muted"> 
+                            <i class="fa fa-heart" style="font-size:18px"></i>
+                                <span >{{image.likes.count}}</span>
+                                <i class="fa fa-comment" style="font-size:18px"></i> <span style="color: white">{{image.comments.count}}</span></p>
+                        
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        </div>
+      </div>
+</div>
+{% endblock %}
