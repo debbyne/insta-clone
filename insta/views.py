@@ -155,3 +155,19 @@ def postComments(request, id):
         'total_likes': image.total_likes()
     }
     return render(request, 'photos.html', Parameters)
+
+@login_required(login_url='login')
+def newPostForm(request):
+    current_user = request.user
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES)
+        if form.is_valid():
+            image = form.save(commit=False)
+            user = current_user
+            image.save()
+            
+        return redirect('index')
+
+    else:
+        form = PostForm()
+    return render(request, 'newpost.html', {"form": form})
