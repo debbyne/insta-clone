@@ -11,19 +11,19 @@ from django.template.loader import render_to_string
 
 # Create your views here.
 
-@login_required(login_url='/accounts/login')
-def search_results(request):
+# @login_required(login_url='/accounts/login')
+# def search_results(request):
 
-    if 'search_username' in request.GET and request.GET["search_username"]:
-        search_term = request.GET.get("search_username")
-        searched_username = Profile.search_profile(search_term)
-        message = f"{search_term}"
+#     if 'search_username' in request.GET and request.GET["search_username"]:
+#         search_term = request.GET.get("search_username")
+#         searched_username = Profile.search_profile(search_term)
+#         message = f"{search_term}"
 
-        return render(request, 'search.html',{"message":message, 'profile':searched_username})
+#         return render(request, 'search.html',{"message":message, 'profile':searched_username})
 
-    else:
-        message = "You haven't searched for any term"
-        return render(request, 'search.html',{"message":message})
+#     else:
+#         message = "You haven't searched for any term"
+#         return render(request, 'search.html',{"message":message})
 
 def SignUp(request):
     if request.method == 'POST':
@@ -39,15 +39,9 @@ def SignUp(request):
         form = SignUpForm()
     return render(request, 'django_registration/signup.html', {'form': form})
 
-@login_required(login_url='/accounts/login')
-def index(request):
-    users_total_followed = request.user.profile.following.all()
-    posts = Post.objects.filter(profile__in=users_total_followed).order_by('-time_posted')
-    
-    return render(request,'index.html',{"posts":posts})
 
 @login_required(login_url='/accounts/login')
-def posts(request):
+def index(request):
     images = Post.objects.all()
     user = User.objects.exclude(id=request.user.id)
     if request.method == 'POST':
@@ -59,7 +53,7 @@ def posts(request):
             return HttpResponseRedirect(request.path_info)
     else:
         form = PostForm()
-    return render(request, 'photos.html', {'images': images,'form': form,'user': user,})
+    return render(request, 'index.html', {'images': images,'form': form,'user': user,})
 
 @login_required(login_url='login')
 def profile(request, username):

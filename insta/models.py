@@ -11,7 +11,7 @@ from cloudinary.models import CloudinaryField
 
 class Profile(models.Model):
      name=models.CharField(max_length=50, blank=True)
-     bio=models.TextField(max_length=400, default="My Bio",blank=True)
+     bio=models.TextField(max_length=400, default="My Bio")
      profile_photo=models.ImageField(upload_to = 'photos/',default="",null=True)
      user=models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
      location = models.CharField(max_length=50, blank=True)
