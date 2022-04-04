@@ -62,13 +62,14 @@ class Profile(models.Model):
 
 class Post(models.Model):
     # image = models.ImageField(upload_to = 'photos/',default="",null=True)
-    name = models.CharField(max_length=50,null=True)
+    # name = models.CharField(max_length=50,null=True)
+    time_posted=models.DateTimeField(auto_now_add=True, null=True)
     caption = models.CharField(max_length=100,null=True)
     image = CloudinaryField('image')
-    likes = models.ManyToManyField(User, related_name='likes', blank=True, )
+    # likes = models.ManyToManyField(User, related_name='likes', blank=True, )
     user = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='posts', null=True)
-    time_posted=models.DateTimeField(auto_now_add=True, null=True)
-    profile = models.ForeignKey(Profile, null = True,on_delete=models.CASCADE, blank = True)
+    
+    # profile = models.ForeignKey(Profile, null = True,on_delete=models.CASCADE, blank = True)
 
     class Meta:
         ordering = ["-pk"]
@@ -83,14 +84,11 @@ class Post(models.Model):
     def save_image(self):
         self.save()
 
-    def total_likes(self):
-        return self.likes.count()
-    
     def delete_image(self):
         self.delete()
 
     def __str__(self):
-        return f'{self.user.username} Post'
+        return f'{self.user} Post'
 
     @classmethod
     def update_image(cls ,id ,image):

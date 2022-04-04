@@ -22,7 +22,9 @@
 
 <body>
 
-  {% block content %}  {%endblock%}
+  {% block content %} 
+  {% include 'navbar.html' %}
+  {%endblock%}
 
 
   {% block scripts %}

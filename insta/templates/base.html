@@ -9,16 +9,13 @@
   {% block styles %}
    
     <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@300&display=swap" rel="stylesheet">
-    {% endblock %}
+  {% endblock %}
 
 </head>
 <body>
-  {% block navbar %}
-    {% include 'navbar.html' %}
-    {% endblock %}
-
-    {% block content %} <h1 class='text-center'>Photos</h1> 
-    {%endblock%}
+  {% block content %}
+  {% include 'navbar.html' %}
+  {% endblock %}
 
     {% block scripts %}
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
