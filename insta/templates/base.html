@@ -7,14 +7,15 @@
 
 
   {% block styles %}
-    {% bootstrap_css %}
-    <link rel="stylesheet" href="{% static 'css/insta.css' %}">
+   
     <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@300&display=swap" rel="stylesheet">
     {% endblock %}
 
 </head>
 <body>
-    {% include "navbar.html" %}
+  {% block navbar %}
+    {% include 'navbar.html' %}
+    {% endblock %}
 
     {% block content %} <h1 class='text-center'>Photos</h1> 
     {%endblock%}
