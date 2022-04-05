@@ -4,7 +4,7 @@
 Debbyne Kinya
 
 # Preview of the page
-![Landing page photo](https://github.com/debbyne/gallery/blob/master/media/photos/Screenshot%20from%202022-03-30%2015-16-16.png)
+![Landing page photo](https://github.com/debbyne/insta-clone/blob/master/media/images/Screenshot%20from%202022-04-06%2001-46-10.png)
 
 # Description
 The user can be able to :
