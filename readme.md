@@ -12,7 +12,7 @@ The user can be able to :\
 2.Upload my pictures to the application.\
 3.See my profile with all my pictures.\
 4.Follow other users and see their pictures on my timeline.\
-5.Like a picture and leave a comment on it.\
+5.Like a picture and leave a comment on it.
 
 
 
@@ -20,7 +20,7 @@ The user can be able to :\
 python 3.8\
 pip\
 DJANGO\
-django-bootstrap\
+django-bootstrap
 
 
 # Setup
@@ -40,7 +40,7 @@ DB_USER=\
 DB_PASSWORD=\
 DB_HOST='127.0.0.1'\
 ALLOWED_HOSTS='.localhost','.herokuapp.com','127.0.0.1'\
-create a virtual environment and install the requirements.txt by pip install -r requirements.txt\
+create a virtual environment and install the requirements.txt by pip install -r requirements.txt
 # Running Application
 
 run python3.8 manage.py runserver
