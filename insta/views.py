@@ -7,6 +7,8 @@ from .forms import SignUpForm, UpdateUserForm, UpdateUserProfileForm, PostForm, 
 from django.contrib.auth import login, authenticate,logout
 from django.contrib.auth.models import User
 from django.template.loader import render_to_string
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib import messages
 
 
 #Create your views here.
@@ -25,20 +27,43 @@ def search_results(request):
         message = "You haven't searched for any term"
         return render(request, 'search.html',{"message":message})
 
-# def SignUp(request):
-#     if request.method == 'POST':
-#         form = SignUpForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#             username = form.cleaned_data.get('username')
-#             raw_password = form.cleaned_data.get('password1')
-#             user = authenticate(username=username, password=raw_password)
-#             login(request, user)
-#             return redirect('index')
-#     else:
-#         form = SignUpForm()
-#     return render(request, 'django_registration/registration_form.html', {'form': form})
+def SignUp(request):
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
+            login(request, user)
+            return redirect('index')
+    else:
+        form = SignUpForm()
+    return render(request, 'django_registration/registration_form.html', {'form': form})
 
+@login_required(login_url='login')
+def logoutrequest(request):
+	logout(request)
+	messages.info(request, "You have successfully logged out.") 
+	return redirect("social:homepage")
+
+def loginrequest(request):
+    if request.method == "POST":
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                messages.info(request, f"You are now logged in as {username}.")
+                return redirect("/index")
+            else:
+                messages.error(request, "Invalid username or password.")
+        else:
+            messages.error(request, "Invalid username or password.")
+    form = AuthenticationForm()
+    return render(request, "register/login.html", {"loginform": form})
 
 @login_required(login_url='/accounts/login')
 def index(request):
