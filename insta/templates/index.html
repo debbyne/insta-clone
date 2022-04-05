@@ -16,8 +16,6 @@
               <a class="navbar-brand" href="{% url 'insta:index' %}"> INSTAGRAM</a>
             </div>
              </h1>
-             
-          
         <div class="list">
 
           <form class="navbar-form" role="search" action="{% url 'insta:search_results' %}">
@@ -39,7 +37,7 @@
               <div class="home-icon">
                 <a href="{% url 'insta:index' %}">
                   <h1> </h1>
-                  <i class="fa fa-home" style="font-size:15px"></i>
+                  <i class="fa fa-home" style="font-size:22px"></i>
                 </a>
               
               </div>
@@ -47,16 +45,16 @@
               
 
               <div class="plus-icon">
-                <i class="fa fa-plus-square" style="font-size:15px"></i>
+                <i class="fa fa-plus-square" style="font-size:22px"></i>
                </div>
               <div class="love-icon">
-                <i class="fa fa-heart" style="font-size:15px"></i>
+                <i class="fa fa-heart" style="font-size:22px"></i>
               </div>
             
             <ul>
               <div class="dropdown">
                 <a href="#" class="dropdown-toggle btn btn-default" data-toggle="dropdown" role="button" aria-expanded="false">
-                  <i id="greyi" class="fa fa-user" style="font-size:14px"></i>
+                  <i id="greyi" class="fa fa-user" style="font-size:22px"></i>
                           <span class="caret"></span>
                       </a>
                 <ul class="dropdown-menu" role="menu">
@@ -92,7 +90,7 @@
     
     
     <div class="row justify-content-md-center">
-      <div class="col col-lg-2">
+      <div class="col">
        
         <img id="image" class="card-img-top" src="{{image.image.url}}" alt="image" width="80%">
       
@@ -145,14 +143,14 @@
 <style>
     .main{
         margin-top: 15%;
-        padding-left: 400px;
+        padding-left: 500px;
         font-family: 'Roboto', sans-serif;
         display: flex;
-        font-size: 25px;
+        font-size: 20px;
     }
     .container-fluid{
       font-size: 29px;
-      margin-left: 40px;
+      margin-left: 240px;
       margin-right: 50px;
       display: flex;
       justify-content: space-evenly;
@@ -160,7 +158,9 @@
       border: none;
       background-color: white;
     }
-    
+    .container-fluid h1{
+      font-size: 28px;
+    }
     .container-fluid a{
       color: rgb(0, 0, 0);
     }
