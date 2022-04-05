@@ -70,13 +70,8 @@ def profile(request):
             userForm = UpdateUserForm(instance=request.user)
             profileForm = UpdateUserProfileForm(instance=request.user.profile)
 
-        Parameters = {
-        'userForm': userForm,
-        'profileForm': profileForm,
-        'images': images,   
-
-    }
-    return render(request, 'profile/profile.html', Parameters)
+        
+    return render(request, 'profile.html')
 
 @login_required(login_url='login')
 def userProfile(request, username):

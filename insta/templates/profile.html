@@ -1,34 +1,90 @@
 {% extends 'base.html' %}
+{% block styles %}
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@300&family=Roboto:wght@300&display=swap" rel="stylesheet">
+   
+{% endblock%}
 {% block content %}
-<div class="container">
-    <div class="col-md-4">  </div>
-    <div class="col-md-4">
-<div class="user-circle">
-    <img src="" alt="image">
-</div>
-    </div>
-    <div class="col-md-4">  </div>
 
+<div class="container">
+    <div class="navbar  fixed-top" role="navigation">
+      <div class="container-fluid">
+          <div class="navbar-header">
+             <h1>
+              <a class="navbar-brand" href="{% url 'index' %}"> INSTAGRAM</a>
+            </div>
+             </h1>
+             
+          
+        <div class="list">
+
+          <form class="navbar-form" role="search" action="{% url 'search_results' %}">
+            <div class="input-group">
+              <div class="search">
+              
+              <a href="{% url 'index' %}">
+                
+                <input id="search_input" type="text"  placeholder="Search..." >
+                <i class="fa fa-search" style="font-size:12px"></i>
+                <label  value="submit" for="search-input"><span class="glyphicon glyphicon-search search-icon"></span></label>
+            
+              </a>
+            </div>
+                </div>
+            </div>
+          </form>
+         
+              <div class="home-icon">
+                <a href="{% url 'index' %}">
+                  <h1> </h1>
+                  <i class="fa fa-home" style="font-size:15px"></i>
+                </a>
+              
+              </div>
+               
+              
+
+              <div class="plus-icon">
+                <i class="fa fa-plus-square" style="font-size:15px"></i>
+               </div>
+              <div class="love-icon">
+                <i class="fa fa-heart" style="font-size:15px"></i>
+              </div>
+            
+            
+          </div>    
+    </div>
+    </div>
 
     <div class="media">
-        <img class="align-self-start mr-3" src="{{ user.profile.profile_photo.url }}" alt="image" width="45%">
+        {%  if request.user.profile.profile_photo%}
+        <img class="align-self-start mr-3" src="{{request.user.profile.profile_photo.url }}" alt="image" width="40%">
+        {% else %}
+        <i id="greyi" class="fa fa-user" style="font-size:30px"></i>
+        {% endif %}
+        
         <div class="media-body">
-          <h4 class="mt-0">{{user.name}}</h4>
+
+            
+          <h4 class="mt-0">{{profile.user.user.username}}</h4>
           <div class="details">
             <span class="mr-5">{{images.count}}</strong> Posts</span>
             <span class="mr-5"> {{ user.profile.followers.count }}followers</span>
             <span class="mr-5"> {{ user.profile.following.count }} following</span>
           </div>
           <div class="bio-details">
-              <p>{{ {{ user.profile.bio }} }}</p>
+              <p>{{ user.profile.bio}}</p>
+              <button class="btn btn-sm btn-success">Update Profile</button>
           </div>
 
           <div class="prof">
-              <ul>
-                  <li> Change Password </li>
-                  <li>   <a href="/accounts/logout">Logout</a> </li>
-                  <li>Close</li>
+    <ul>
+                <li> Change Password </li>
+                <li>   <a href="/accounts/logout">Logout</a> </li>
+                <li>Close</li>
               </ul>
           </div>
 
@@ -36,7 +92,7 @@
             {% for post in Posts %}
                 <div class="card " id="post">
                     <div class="card-body">
-                        <img src="{{image.image.url}}" alt="{{image.caption}}" class="card-img"  height="100%">
+                        <img src="{{post.image.url}}" alt="image" class="card-img"  height="100%">
                         <p class="text-muted"> 
                             <i class="fa fa-heart" style="font-size:18px"></i>
                                 <span >{{image.likes.count}}</span>
@@ -49,4 +105,62 @@
         </div>
       </div>
 </div>
+
+<style>
+    .media{
+        padding-left: 250px;
+        font-family: 'Roboto', sans-serif;
+        margin-top: 10%;
+    }
+    .navbar-header{
+    font-family: 'Lobster', cursive;
+    padding-left: 90px;
+    font-weight: 100;
+      
+    }
+    #search_input{
+      width: 48%;
+      height: 64%;
+      font-size: 10px;
+      border-radius: 3px;
+      border: 1.1px solid rgb(226, 223, 223);
+      margin-left: 70px;
+    }
+    
+    .list{
+      display: flex;
+      justify-content: space-evenly;
+      padding-top: 9px;
+    }
+    .love-icon{
+      padding-top: 10px;
+      padding-right: 22px;
+    
+    }
+    .home-icon{
+      padding-right: 22px;
+    }
+    .plus-icon{
+      padding-top: 10px;
+      padding-right: 22px;
+    }
+    .container-fluid{
+        font-size: 12px;
+      margin-left: 40px;
+      margin-right: 50px;
+      display: flex;
+      justify-content: space-evenly;
+      color: rgb(0, 0, 0);
+      border: none;
+      background-color: white;
+    }
+    
+    .container-fluid a{
+      color: rgb(0, 0, 0);
+    }
+    #greyi{
+      color: rgb(199, 198, 198);
+      
+    }
+</style>
 {% endblock %}
