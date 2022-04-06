@@ -1,4 +1,5 @@
 from inspect import Parameter
+from pickle import FALSE
 from django.shortcuts import render,redirect, get_object_or_404
 from django.http  import HttpResponse,HttpResponseRedirect, JsonResponse
 from .models import Post,Profile,Comments,Follow
@@ -83,21 +84,19 @@ def index(request):
 @login_required(login_url='login')
 def profile(request):
     images = request.user.profile.posts.all()
-    profile = request.user()
+    profile = request.user
+    profileForm = UpdateUserProfileForm()
     if request.method == 'POST':
-        userForm = UpdateUserForm(request.POST, instance=request.user)
-        profileForm = UpdateUserProfileForm(request.POST, request.FILES, instance=request.user.profile)
-        if userForm.is_valid() and profileForm.is_valid():
-            userForm.save()
-            profileForm.save()
-            return HttpResponseRedirect(request.path_info)
-
+        profileForm = UpdateUserProfileForm(request.POST, request.FILES)
+        if profileForm.is_valid():
+            profile=profileForm.save(commit=FALSE)
+            profile.save()
         else:
-            userForm = UpdateUserForm(instance=request.user)
-            profileForm = UpdateUserProfileForm(instance=request.user.profile)
+           
+            profileForm = UpdateUserProfileForm()
 
         
-    return render(request, 'profile.html' ,{'user': profile})
+    return render(request, 'profile.html' ,{'user': profile, 'profileForm':profileForm})
 
 @login_required(login_url='login')
 def userProfile(request, username):
