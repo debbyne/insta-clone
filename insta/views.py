@@ -70,16 +70,16 @@ def loginrequest(request):
 def index(request):
     images = Post.objects.all()
     user = User.objects.exclude(id=request.user.id)
-    if request.method == 'POST':
-        form = PostForm(request.POST, request.FILES)
-        if form.is_valid():
-            post = form.save(commit=False)
-            post.user = request.user.profile
-            post.save()
-            return HttpResponseRedirect(request.path_info)
-    else:
-        form = PostForm()
-    return render(request, 'index.html', {'images': images,'form': form,'user': user})
+    # if request.method == 'POST':
+    #     form = PostForm(request.POST, request.FILES)
+    #     if form.is_valid():
+    #         post = form.save(commit=False)
+    #         post.user = request.user.profile
+    #         post.save()
+    #         return HttpResponseRedirect(request.path_info)
+    # else:
+    #     form = PostForm()
+    return render(request, 'index.html', {'images': images,'user': user})
 
 @login_required(login_url='login')
 def profile(request):
@@ -190,3 +190,7 @@ def newPostForm(request):
     else:
         form = PostForm()
     return render(request, 'newpost.html', {"form": form})
+
+@login_required(login_url='login')
+def welcome(request):
+    return render(request, 'welcome.html')

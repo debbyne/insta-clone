@@ -64,7 +64,7 @@ class Post(models.Model):
     # image = models.ImageField(upload_to = 'photos/',default="",null=True)
     # name = models.CharField(max_length=50,null=True)
     time_posted=models.DateTimeField(auto_now_add=True, null=True)
-    caption = models.CharField(max_length=100,null=True)
+    caption = models.TextField(max_length=100,null=True)
     image = CloudinaryField('image')
     # likes = models.ManyToManyField(User, related_name='likes', blank=True, )
     user = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='posts', null=True)
