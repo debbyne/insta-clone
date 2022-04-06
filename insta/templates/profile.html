@@ -14,18 +14,18 @@
       <div class="container-fluid">
           <div class="navbar-header">
              <h1>
-              <a class="navbar-brand" href="{% url 'index' %}"> INSTAGRAM</a>
+              <a class="navbar-brand" href="/"> INSTAGRAM</a>
             </div>
              </h1>
              
           
         <div class="list">
 
-          <form class="navbar-form" role="search" action="{% url 'search_results' %}">
+          <form class="navbar-form" role="search" action="">
             <div class="input-group">
               <div class="search">
               
-              <a href="{% url 'index' %}">
+              <a href="/">
                 
                 <input id="search_input" type="text"  placeholder="Search..." >
                 <i class="fa fa-search" style="font-size:12px"></i>
@@ -38,7 +38,7 @@
           </form>
          
               <div class="home-icon">
-                <a href="{% url 'index' %}">
+                <a href="/">
                   <h1> </h1>
                   <i class="fa fa-home" style="font-size:15px"></i>
                 </a>
@@ -60,18 +60,18 @@
     </div>
 
     <div class="media">
-        {%  if request.user.profile.profile_photo%}
+        <!-- {%  if request.user.profile.profile_photo%}
         <img class="align-self-start mr-3" src="{{request.user.profile.profile_photo.url }}" alt="image" width="40%">
         {% else %}
         <i id="greyi" class="fa fa-user" style="font-size:30px"></i>
-        {% endif %}
+        {% endif %} -->
         
         <div class="media-body">
 
             
-          <h4 class="mt-0">{{profile.user.user.username}}</h4>
+          <h4 class="mt-0">{{user.username}}</h4>
           <div class="details">
-            <span class="mr-5">{{images.count}}</strong> Posts</span>
+            <span class="mr-5">{{images.count}} Posts</span>
             <span class="mr-5"> {{ user.profile.followers.count }}followers</span>
             <span class="mr-5"> {{ user.profile.following.count }} following</span>
           </div>

@@ -78,11 +78,12 @@ def index(request):
             return HttpResponseRedirect(request.path_info)
     else:
         form = PostForm()
-    return render(request, 'index.html', {'images': images,'form': form,'user': user,})
+    return render(request, 'index.html', {'images': images,'form': form,'user': user})
 
 @login_required(login_url='login')
 def profile(request):
     images = request.user.profile.posts.all()
+    profile = request.user()
     if request.method == 'POST':
         userForm = UpdateUserForm(request.POST, instance=request.user)
         profileForm = UpdateUserProfileForm(request.POST, request.FILES, instance=request.user.profile)
@@ -96,12 +97,11 @@ def profile(request):
             profileForm = UpdateUserProfileForm(instance=request.user.profile)
 
         
-    return render(request, 'profile.html')
+    return render(request, 'profile.html' ,{'user': profile})
 
 @login_required(login_url='login')
 def userProfile(request, username):
-    userProfile = get_object_or_404(User, username=username)
-
+    userProfile = request.user
     if request.user == userProfile:
         return redirect('profile', username=request.user.username)
     user_posts = userProfile.profile.posts.all()
